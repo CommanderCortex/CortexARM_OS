@@ -3,10 +3,13 @@
 
 use core::panic::PanicInfo;
 use core::arch::global_asm;
+use crate::serialdriver::*;
+
+mod serialdriver;
 
 #[no_mangle]
 #[link_section = ".stack"]
-static mut STACK: [u8; 1024] = [0; 1024];
+static mut STACK: [u8; STACK_SIZE] = [0; STACK_SIZE];
 
 const STACK_SIZE: usize = 1024;
 
@@ -19,21 +22,10 @@ fn panic(_info: &PanicInfo) -> ! {
 	loop{}
 }
 
-fn serial_put_string(s: &str) {
-	for c in s.chars() {
-		serial_put_char(c);
-	}
-}
-
-fn serial_put_char(c: char) {
-	let uart_addr = 0x0900_0000 as *mut u8;
-	unsafe {
-		*uart_addr = c as u8;
-	}
-}
-
 #[no_mangle]
 fn main() {
 	serial_put_string("Hello, world!\n");
+	panic!();
+	
 	loop{}
 }	
