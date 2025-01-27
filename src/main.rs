@@ -18,6 +18,12 @@ fn panic(_info: &PanicInfo) -> ! {
 	loop{}
 }
 
+fn serial_put_string(s: &str) {
+	for c in s.chars() {
+		serial_put_char(c);
+	}
+}
+
 fn serial_put_char(c: char) {
 	let uart_addr = 0x0900_0000 as *mut u8;
 	unsafe {
@@ -27,6 +33,6 @@ fn serial_put_char(c: char) {
 
 #[no_mangle]
 fn main() {
-	serial_put_char('H');
+	serial_put_string("Hello, world!\n");
 	loop{}
 }	
