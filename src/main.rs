@@ -15,6 +15,7 @@ global_asm!(include_str!("boot.s"), sym STACK, const STACK_SIZE);
 //
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {	
+	serial_put_string("Kernel Panic: Halt!\n");
 	loop{}
 }
 
