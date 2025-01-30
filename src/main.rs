@@ -1,13 +1,13 @@
-#![no_std]
-#![no_main]
+#![no_std] //Leaves out all Standard Headers when compiling binary
+#![no_main] // No Operating System or runtime to start our program at the Main Funtion
 
-use core::panic::PanicInfo;
-use core::arch::global_asm;
-use crate::serialdriver::*;
+use core::panic::PanicInfo; // Builtin ARM Flag for Kernel Panics
+use core::arch::global_asm; // Bultin ARM Instructions for the CPU Architecture
+use crate::serialdriver::*; // Our implementation of a Serial Driver for displaying text to the console
 
-mod serialdriver;
+mod serialdriver; //Module Implented
 
-#[no_mangle]
+#[no_mangle] // No Mangles the name of our Stack
 #[link_section = ".stack"]
 static mut STACK: [u8; STACK_SIZE] = [0; STACK_SIZE];
 
